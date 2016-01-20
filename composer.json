@@ -1,0 +1,31 @@
+{
+    "name": "ohlandt/required-records",
+    "description": "Make sure your system has the records it depends on.",
+    "type": "bolt-extension",
+    "keywords" : [ "records", "util" , "management"],
+    "require": {
+        "bolt/bolt": ">=2.0.0,<3.0.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Phillipp Ohlandt",
+            "email": "phillipp.ohlandt@googlemail.com"
+        }
+    ],
+	"minimum-stability" : "dev",
+	"prefer-stable" : true,
+    "autoload": {
+        "files": [
+            "init.php"
+        ],
+        "psr-4": {
+            "Bolt\\Extension\\Ohlandt\\RequiredRecords\\": "",
+            "Bolt\\Extension\\Ohlandt\\RequiredRecords\\Tests\\": "tests"
+        }
+    },
+
+    "extra": {
+        "bolt-assets": "assets"
+    }
+}
