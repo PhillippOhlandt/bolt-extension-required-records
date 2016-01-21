@@ -28,7 +28,7 @@ social:
         slug:
             type: slug
             uses: title
-        username:
+        name:
             type: text
     required:
         - slug: twitter
