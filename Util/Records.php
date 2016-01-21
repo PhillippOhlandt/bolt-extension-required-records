@@ -60,7 +60,6 @@ class Records
 
         foreach ($missingRecords as $contenttype => $items) {
             foreach ($items as $item) {
-
                 $content = $this->storage->getEmptyContent($contenttype);
 
                 $content->setValues($item);
