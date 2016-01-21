@@ -29,7 +29,7 @@ social:
             type: slug
             uses: title
         username:
-            type: textarea
+            type: text
     required:
         - slug: twitter
           title: Twitter
