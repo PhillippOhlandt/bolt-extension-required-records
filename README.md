@@ -36,7 +36,9 @@ social:
         - slug: github
           title: Github
     default_status: published
-    sort: -datepublish
+    show_on_dashboard: false
+    searchable: false
+    viewless: true
 ```
 
 As you can see, we just added the `required` section to the contenttype where you can define the records you need.
