@@ -41,7 +41,8 @@ class Records
 
         foreach ($required as $contenttype => $items) {
             foreach ($items as $item) {
-                $entries = $this->storage->searchContentType($contenttype, $item);
+                $pager = [];
+                $entries = $this->storage->getContent($contenttype, '', $pager, $item);
 
                 $entries = array_values($entries);
 

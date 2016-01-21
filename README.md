@@ -37,7 +37,7 @@ social:
           title: Github
     default_status: published
     show_on_dashboard: false
-    searchable: true
+    searchable: false
     viewless: true
 ```
 
@@ -46,9 +46,6 @@ As you can see, we just added the `required` section to the contenttype where yo
 ###### Note:
 Don't define the real content of a record, otherwise this extension would create a new record after you changed the content.
 It's better to just define the `slug` and maybe the `title` as well.
-
-###### Note 2:
-Don't define `searchable: false` on the contenttype, otherwise this extension won't find the existing record and will create a new one.
 
 ### Usage
 Your required records won't be automaticly created but you just have to hit one button or run one nut command.
