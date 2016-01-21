@@ -25,13 +25,11 @@ social:
         title:
             type: text
             class: large
-            group: content
         slug:
             type: slug
             uses: title
         username:
-            type: html
-            height: 300px
+            type: text
     required:
         - slug: twitter
           title: Twitter
