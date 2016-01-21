@@ -60,6 +60,11 @@ class Records
 
         foreach ($missingRecords as $contenttype => $items) {
             foreach ($items as $item) {
+
+                if (!isset($item['title'])) {
+                    $item['title'] = '';
+                }
+
                 $content = new \Bolt\Content($this->app, $contenttype, $item);
                 $this->storage->saveContent($content);
             }
