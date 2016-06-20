@@ -23,9 +23,5 @@
             "Bolt\\Extension\\Ohlandt\\RequiredRecords\\": "",
             "Bolt\\Extension\\Ohlandt\\RequiredRecords\\Tests\\": "tests"
         }
-    },
-
-    "extra": {
-        "bolt-assets": "assets"
     }
 }
