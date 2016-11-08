@@ -2,6 +2,7 @@
 
 namespace Bolt\Extension\Ohlandt\RequiredRecords\Provider;
 
+use Bolt\Extension\Ohlandt\RequiredRecords\Manager\RecordManager;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
@@ -22,7 +23,7 @@ class RequiredRecordsServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-
+        $this->registerRecordManager($app);
     }
 
     /**
@@ -31,5 +32,16 @@ class RequiredRecordsServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
 
+    }
+
+    private function registerRecordManager(Application $app)
+    {
+        $app['requiredrecords.recordmanager'] = $app->share(
+            function () use ($app) {
+                return new RecordManager(
+                    $app['config']->get('contenttypes', 'default')
+                );
+            }
+        );
     }
 }
