@@ -2,17 +2,25 @@
 
 namespace Bolt\Extension\Ohlandt\RequiredRecords\Record;
 
+use Bolt\Extension\Ohlandt\RequiredRecords\Field\Field;
+
 class RequiredRecord
 {
+    protected $contenttype;
+
     protected $fields = [];
 
-    public function __construct(array $fields)
+    public function __construct($contenttype, array $fields)
     {
-        $this->parseRecord($fields);
+        $this->contenttype = $contenttype;
+        $this->setFields($fields);
     }
 
-    protected function parseRecord(array $fields)
+    protected function setFields(array $fields)
     {
-
+        foreach($fields as $key => $value) {
+            $field = new Field($key, $value);
+            $this->fields[] = $field;
+        }
     }
 }

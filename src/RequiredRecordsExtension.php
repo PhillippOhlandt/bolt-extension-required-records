@@ -18,4 +18,9 @@ class RequiredRecordsExtension extends SimpleExtension
             new Provider\RequiredRecordsServiceProvider(),
         ];
     }
+
+    public function boot(\Silex\Application $app)
+    {
+        dump($app['requiredrecords.recordmanager']);
+    }
 }
