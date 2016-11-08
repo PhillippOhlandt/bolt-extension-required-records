@@ -11,5 +11,11 @@ use Bolt\Extension\SimpleExtension;
  */
 class RequiredRecordsExtension extends SimpleExtension
 {
-
+    public function getServiceProviders()
+    {
+        return [
+            $this,
+            new Provider\RequiredRecordsServiceProvider(),
+        ];
+    }
 }
