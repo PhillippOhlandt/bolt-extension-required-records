@@ -16,6 +16,16 @@ class RequiredRecord
         $this->setFields($fields);
     }
 
+    public function getContentType()
+    {
+        return $this->contenttype;
+    }
+
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
     protected function setFields(array $fields)
     {
         foreach($fields as $key => $value) {

@@ -13,6 +13,11 @@ class RecordManager
         $this->parseContentTypes($contenttypes);
     }
 
+    public function getRecords()
+    {
+        return $this->records;
+    }
+
     protected function parseContentTypes(array $contenttypes)
     {
         foreach($contenttypes as $contenttype => $values) {
