@@ -2,8 +2,10 @@
 
 namespace Bolt\Extension\Ohlandt\RequiredRecords\Nut;
 
+use Bolt\Extension\Ohlandt\RequiredRecords\Filter\GroupedByContentTypesFilter;
 use Silex\Application;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -50,20 +52,30 @@ class ShowCommand extends Command
 
     private function renderRecordsTables(array $records, $output)
     {
-        foreach($records as $record) {
+        $formattedRecords = GroupedByContentTypesFilter::filter($records);
+
+        foreach($formattedRecords as $contenttype => $records) {
             $table = $this->getHelper('table');
-            $table->setHeaders([$record->getContentType()]);
+            $table->setHeaders(
+                [
+                    new TableCell($contenttype, array('colspan' => 3))
+                ]
+            );
 
             $rows = [];
-            $rows[] = ['key', 'value', 'optional'];
-            $rows[] = new TableSeparator();
 
-            foreach($record->getFields() as $field) {
-                $rows[] = [
-                    $field->getKey(),
-                    $field->getValue(),
-                    $field->isOptional() ? 'x' : ''
-                ];
+            $rows[] = ['key', 'value', 'optional'];
+
+            foreach($records as $record) {
+                $rows[] = new TableSeparator();
+
+                foreach($record->getFields() as $field) {
+                    $rows[] = [
+                        $field->getKey(),
+                        $field->getValue(),
+                        $field->isOptional() ? 'x' : ''
+                    ];
+                }
             }
 
             $table->setRows($rows);
