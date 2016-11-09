@@ -47,22 +47,29 @@ class ShowCommand extends Command
 
         $output->writeln('The following records are required:');
 
-        $this->renderRecordsTables($recordManager->getRecords(), $output);
+        $this->renderRecordsTable($recordManager->getRecords(), $output);
     }
 
-    private function renderRecordsTables(array $records, $output)
+    private function renderRecordsTable(array $records, $output)
     {
         $formattedRecords = GroupedByContentTypesFilter::filter($records);
+        $table = $this->getHelper('table');
+
+        $rows = [];
+
+        $first = true;
 
         foreach($formattedRecords as $contenttype => $records) {
-            $table = $this->getHelper('table');
-            $table->setHeaders(
-                [
-                    new TableCell($contenttype, array('colspan' => 3))
-                ]
-            );
 
-            $rows = [];
+            if(!$first) {
+                $rows[] = new TableSeparator();
+            }
+
+            $first = false;
+
+            $rows[] = [new TableCell("<fg=green;options=bold>{$contenttype}</>", array('colspan' => 3))];
+
+            $rows[] = new TableSeparator();
 
             $rows[] = ['key', 'value', 'optional'];
 
@@ -78,8 +85,9 @@ class ShowCommand extends Command
                 }
             }
 
-            $table->setRows($rows);
-            $table->render($output);
         }
+
+        $table->setRows($rows);
+        $table->render($output);
     }
 }
