@@ -3,6 +3,7 @@
 namespace Bolt\Extension\Ohlandt\RequiredRecords;
 
 use Bolt\Extension\SimpleExtension;
+use Pimple;
 
 /**
  * Required Records extension class.
@@ -16,6 +17,13 @@ class RequiredRecordsExtension extends SimpleExtension
         return [
             $this,
             new Provider\RequiredRecordsServiceProvider(),
+        ];
+    }
+
+    protected function registerNutCommands(Pimple $container)
+    {
+        return [
+            new Nut\ShowCommand($container),
         ];
     }
 
