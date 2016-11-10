@@ -55,4 +55,95 @@ class RecordManagerTest extends BoltUnitTest
         $this->assertContainsOnlyInstancesOf(RequiredRecord::class, $manager->getRecords());
     }
 
+    /** @test */
+    public function it_compares_required_records_with_records_from_the_database()
+    {
+        $app = $this->getApp();
+        $this->addDefaultUser($app);
+
+        $em = $app['storage'];
+        $repo = $em->getRepository('blocks');
+
+        $entity1 = $repo->create(['title' => 'Twitter', 'slug' => 'twitter', 'status' => 'published']);
+        $entity2 = $repo->create(['title' => 'GitHub', 'slug' => 'github', 'status' => 'published']);
+        $entity3 = $repo->create(['title' => 'Facebook something', 'slug' => 'facebook', 'status' => 'published']);
+        $entity4 = $repo->create(['title' => 'Facebook', 'slug' => 'facebook-2', 'status' => 'published']);
+
+        $repo->save($entity1);
+        $repo->save($entity2);
+        $repo->save($entity3);
+        $repo->save($entity4);
+
+        $contenttypes = [
+            'blocks' => [
+                'required' => [
+                    [
+                        'title' => 'Twitter',
+                        'slug' => 'twitter'
+                    ],
+                    [
+                        'title' => 'GitHub',
+                        'slug' => 'github'
+                    ]
+                ]
+            ]
+        ];
+
+        $manager = new RecordManager($contenttypes, $app['storage']);
+
+        $missingRecords = $manager->getMissingRecords();
+        $this->assertCount(0, $missingRecords);
+        $this->assertContainsOnlyInstancesOf(RequiredRecord::class, $missingRecords);
+
+        $contenttypes = [
+            'blocks' => [
+                'required' => [
+                    [
+                        'title' => 'Twitter',
+                        'slug' => 'twitter'
+                    ],
+                    [
+                        'title' => 'GitHub',
+                        'slug' => 'github'
+                    ],
+                    [
+                        'title' => 'Facebook',
+                        'slug' => 'facebook'
+                    ],
+                ]
+            ]
+        ];
+
+        $manager = new RecordManager($contenttypes, $app['storage']);
+
+        $missingRecords = $manager->getMissingRecords();
+        $this->assertCount(1, $missingRecords);
+        $this->assertContainsOnlyInstancesOf(RequiredRecord::class, $missingRecords);
+
+        $contenttypes = [
+            'blocks' => [
+                'required' => [
+                    [
+                        'title' => 'Twitter',
+                        'slug' => 'twitter'
+                    ],
+                    [
+                        'title' => 'GitHub',
+                        'slug' => 'github'
+                    ],
+                    [
+                        'title|o' => 'Facebook',
+                        'slug' => 'facebook'
+                    ],
+                ]
+            ]
+        ];
+
+        $manager = new RecordManager($contenttypes, $app['storage']);
+
+        $missingRecords = $manager->getMissingRecords();
+        $this->assertCount(0, $missingRecords);
+        $this->assertContainsOnlyInstancesOf(RequiredRecord::class, $missingRecords);
+    }
+
 }

@@ -29,7 +29,8 @@ class RequiredRecordsExtension extends SimpleExtension
 
     public function boot(\Silex\Application $app)
     {
-        dump($app['requiredrecords.recordmanager']);
-        dump($app['storage']);
+        //dump($app['requiredrecords.recordmanager']);
+        //dump($app['requiredrecords.recordmanager']->getMissingRecords());
+        //dump($app['storage']);
     }
 }

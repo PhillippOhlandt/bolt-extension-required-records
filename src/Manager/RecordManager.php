@@ -24,6 +24,37 @@ class RecordManager
         return $this->records;
     }
 
+    public function getMissingRecords()
+    {
+        $missing = [];
+
+        foreach($this->records as $record) {
+            $repo = $this->storage->getRepository($record->getContentType());
+            $fields = $this->getRequiredFieldsArrayFromRecord($record);
+
+            if($fields) {
+                $results = $repo->findBy($fields);
+                if(!$results) {
+                    $missing[] = $record;
+                }
+            }
+        }
+
+        return $missing;
+    }
+
+    protected function getRequiredFieldsArrayFromRecord(RequiredRecord $record) {
+        $fields = [];
+
+        foreach($record->getFields() as $field) {
+            if($field->isRequired()) {
+                $fields[$field->getKey()] = $field->getValue();
+            }
+        }
+
+        return $fields;
+    }
+
     protected function parseContentTypes(array $contenttypes)
     {
         foreach($contenttypes as $contenttype => $values) {
