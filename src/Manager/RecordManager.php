@@ -3,14 +3,20 @@
 namespace Bolt\Extension\Ohlandt\RequiredRecords\Manager;
 
 use Bolt\Extension\Ohlandt\RequiredRecords\Record\RequiredRecord;
+use Bolt\Storage\EntityManagerInterface;
 
 class RecordManager
 {
     protected $records = [];
+    /**
+     * @var EntityManagerInterface
+     */
+    private $storage;
 
-    public function __construct(array $contenttypes)
+    public function __construct(array $contenttypes, EntityManagerInterface $storage)
     {
         $this->parseContentTypes($contenttypes);
+        $this->storage = $storage;
     }
 
     public function getRecords()

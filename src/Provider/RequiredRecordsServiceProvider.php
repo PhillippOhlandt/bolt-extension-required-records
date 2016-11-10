@@ -39,7 +39,8 @@ class RequiredRecordsServiceProvider implements ServiceProviderInterface
         $app['requiredrecords.recordmanager'] = $app->share(
             function () use ($app) {
                 return new RecordManager(
-                    $app['config']->get('contenttypes', 'default')
+                    $app['config']->get('contenttypes', 'default'),
+                    $app['storage']
                 );
             }
         );

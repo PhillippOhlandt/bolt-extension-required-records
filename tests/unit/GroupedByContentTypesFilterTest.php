@@ -47,7 +47,9 @@ class GroupedByContentTypesFilterTest extends BoltUnitTest
             ]
         ];
 
-        $manager = new RecordManager($contenttypes);
+        $app = $this->getApp();
+
+        $manager = new RecordManager($contenttypes, $app['storage']);
 
         $filteredRecords = GroupedByContentTypesFilter::filter($manager->getRecords());
 

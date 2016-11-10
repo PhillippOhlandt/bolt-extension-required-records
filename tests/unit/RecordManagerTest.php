@@ -47,7 +47,9 @@ class RecordManagerTest extends BoltUnitTest
             ]
         ];
 
-        $manager = new RecordManager($contenttypes);
+        $app = $this->getApp();
+
+        $manager = new RecordManager($contenttypes, $app['storage']);
 
         $this->assertCount(3, $manager->getRecords());
         $this->assertContainsOnlyInstancesOf(RequiredRecord::class, $manager->getRecords());
