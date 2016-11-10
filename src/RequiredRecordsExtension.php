@@ -24,6 +24,7 @@ class RequiredRecordsExtension extends SimpleExtension
     {
         return [
             new Nut\ShowCommand($container),
+            new Nut\CheckCommand($container)
         ];
     }
 
