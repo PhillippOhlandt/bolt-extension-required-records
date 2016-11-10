@@ -144,6 +144,8 @@ class RecordManagerTest extends BoltUnitTest
         $missingRecords = $manager->getMissingRecords();
         $this->assertCount(0, $missingRecords);
         $this->assertContainsOnlyInstancesOf(RequiredRecord::class, $missingRecords);
+
+        $this->resetDB();
     }
 
 }
