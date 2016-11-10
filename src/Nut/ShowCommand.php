@@ -3,13 +3,11 @@
 namespace Bolt\Extension\Ohlandt\RequiredRecords\Nut;
 
 use Bolt\Extension\Ohlandt\RequiredRecords\Filter\GroupedByContentTypesFilter;
-use Silex\Application;
+use Pimple;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Helper\TableSeparator;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ShowCommand extends Command
@@ -19,10 +17,10 @@ class ShowCommand extends Command
     /**
      * Command constructor
      *
-     * @param Application $app
+     * @param Pimple $app
      * @param array $config
      */
-    public function __construct(Application $app)
+    public function __construct(Pimple $app)
     {
         parent::__construct();
         $this->app = $app;
