@@ -32,7 +32,7 @@ class RecordManager
             $repo = $this->storage->getRepository($record->getContentType());
             $fields = $this->getRequiredFieldsArrayFromRecord($record);
 
-            if($fields) {
+            if(count($fields)) {
                 $results = $repo->findBy($fields);
                 if(!$results) {
                     $missing[] = $record;
