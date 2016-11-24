@@ -30,7 +30,7 @@ class RecordManager
 
         foreach($this->records as $record) {
             $repo = $this->storage->getRepository($record->getContentType());
-            $fields = $this->getRequiredFieldsArrayFromRecord($record);
+            $fields = $record->getRequiredFieldsArray();
 
             if(count($fields)) {
                 $results = $repo->findBy($fields);
@@ -57,19 +57,6 @@ class RecordManager
                 $repo->save($entity);
             }
         }
-    }
-
-    protected function getRequiredFieldsArrayFromRecord(RequiredRecord $record)
-    {
-        $fields = [];
-
-        foreach($record->getFields() as $field) {
-            if($field->isRequired()) {
-                $fields[$field->getKey()] = $field->getValue();
-            }
-        }
-
-        return $fields;
     }
 
     protected function parseContentTypes(array $contenttypes)

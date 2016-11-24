@@ -23,4 +23,24 @@ class RequiredRecordTest extends BoltUnitTest
         $this->assertContainsOnlyInstancesOf(Field::class, $record->getFields());
     }
 
+    /** @test */
+    public function it_returns_fields_as_array()
+    {
+        $record = new RequiredRecord('social', ['title' => 'Twitter', 'slug' => 'twitter']);
+
+        $fields = $record->getFieldsArray();
+        $this->assertTrue(is_array($fields));
+        $this->assertCount(2, $fields);
+    }
+
+    /** @test */
+    public function it_returns_required_fields_as_array()
+    {
+        $record = new RequiredRecord('social', ['title|o' => 'Twitter', 'slug' => 'twitter']);
+
+        $fields = $record->getRequiredFieldsArray();
+        $this->assertTrue(is_array($fields));
+        $this->assertCount(1, $fields);
+        $this->assertEquals(['slug' => 'twitter'], $fields);
+    }
 }

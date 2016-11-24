@@ -37,6 +37,19 @@ class RequiredRecord
         return $fields;
     }
 
+    public function getRequiredFieldsArray()
+    {
+        $fields = [];
+
+        foreach($this->fields as $field) {
+            if($field->isRequired()) {
+                $fields[$field->getKey()] = $field->getValue();
+            }
+        }
+
+        return $fields;
+    }
+
     protected function setFields(array $fields)
     {
         foreach($fields as $key => $value) {
