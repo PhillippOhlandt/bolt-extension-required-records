@@ -148,4 +148,41 @@ class RecordManagerTest extends BoltUnitTest
         $this->resetDB();
     }
 
+    /** @test */
+    public function it_creates_missing_records()
+    {
+        $app = $this->getApp();
+        $this->addDefaultUser($app);
+
+        $em = $app['storage'];
+        $repo = $em->getRepository('blocks');
+
+        $entity1 = $repo->create(['title' => 'Twitter', 'slug' => 'twitter', 'status' => 'published']);
+        $repo->save($entity1);
+
+        $contenttypes = [
+            'blocks' => [
+                'required' => [
+                    [
+                        'title' => 'Twitter',
+                        'slug' => 'twitter'
+                    ],
+                    [
+                        'title' => 'GitHub',
+                        'slug' => 'github'
+                    ]
+                ]
+            ]
+        ];
+
+        $manager = new RecordManager($contenttypes, $app['storage']);
+
+        $manager->createMissingRecords();
+
+        $missingRecords = $manager->getMissingRecords();
+        $this->assertCount(0, $missingRecords);
+
+        $this->resetDB();
+    }
+
 }

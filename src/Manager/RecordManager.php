@@ -43,7 +43,24 @@ class RecordManager
         return $missing;
     }
 
-    protected function getRequiredFieldsArrayFromRecord(RequiredRecord $record) {
+    public function createMissingRecords()
+    {
+        $records = $this->getMissingRecords();
+
+        foreach ($records as $record) {
+            $repo = $this->storage->getRepository($record->getContentType());
+            $fields = $record->getFieldsArray();
+
+            if(count($fields)) {
+                $entity = $repo->create($fields);
+                $entity->setStatus('published');
+                $repo->save($entity);
+            }
+        }
+    }
+
+    protected function getRequiredFieldsArrayFromRecord(RequiredRecord $record)
+    {
         $fields = [];
 
         foreach($record->getFields() as $field) {
