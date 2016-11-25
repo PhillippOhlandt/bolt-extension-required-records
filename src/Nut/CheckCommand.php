@@ -2,15 +2,11 @@
 
 namespace Bolt\Extension\Ohlandt\RequiredRecords\Nut;
 
-use Bolt\Extension\Ohlandt\RequiredRecords\Filter\GroupedByContentTypesFilter;
 use Pimple;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\TableCell;
-use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CheckCommand extends Command
+class CheckCommand extends BaseCommand
 {
     private $app;
 
@@ -48,46 +44,5 @@ class CheckCommand extends Command
         $output->writeln('The following records are missing:');
 
         $this->renderRecordsTable($missingRecords, $output);
-    }
-
-    private function renderRecordsTable(array $records, $output)
-    {
-        $formattedRecords = GroupedByContentTypesFilter::filter($records);
-        $table = $this->getHelper('table');
-
-        $rows = [];
-
-        $first = true;
-
-        foreach($formattedRecords as $contenttype => $records) {
-
-            if(!$first) {
-                $rows[] = new TableSeparator();
-            }
-
-            $first = false;
-
-            $rows[] = [new TableCell("<fg=green;options=bold>{$contenttype}</>", array('colspan' => 3))];
-
-            $rows[] = new TableSeparator();
-
-            $rows[] = ['key', 'value', 'optional'];
-
-            foreach($records as $record) {
-                $rows[] = new TableSeparator();
-
-                foreach($record->getFields() as $field) {
-                    $rows[] = [
-                        $field->getKey(),
-                        $field->getValue(),
-                        $field->isOptional() ? 'x' : ''
-                    ];
-                }
-            }
-
-        }
-
-        $table->setRows($rows);
-        $table->render($output);
     }
 }
