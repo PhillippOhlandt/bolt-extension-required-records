@@ -10,7 +10,7 @@ use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CheckCommand extends Command
+class CreateCommand extends Command
 {
     private $app;
 
@@ -29,8 +29,8 @@ class CheckCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('required-records:check')
-            ->setDescription('List all missing records')
+            ->setName('required-records:create')
+            ->setDescription('Create all missing records')
         ;
     }
 
@@ -42,10 +42,12 @@ class CheckCommand extends Command
         $missingRecords = $recordManager->getMissingRecords();
 
         if(!count($missingRecords)) {
-            return $output->writeln('There are no missing records.');
+            return $output->writeln('Nothing to create.');
         }
 
-        $output->writeln('The following records are missing:');
+        $recordManager->createMissingRecords();
+
+        $output->writeln('The following records were created:');
 
         $this->renderRecordsTable($missingRecords, $output);
     }
