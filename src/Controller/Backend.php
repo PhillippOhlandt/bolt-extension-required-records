@@ -39,6 +39,9 @@ class Backend implements ControllerProviderInterface
         $ctr->match('/extend/required-records', [$this, 'overview'])
             ->bind('requiredRecordsOverview')
             ->method(Request::METHOD_GET);
+        $ctr->match('/extend/required-records/add', [$this, 'add'])
+            ->bind('requiredRecordsAdd')
+            ->method(Request::METHOD_GET);
 
         $ctr->before([$this, 'before']);
 
@@ -84,5 +87,17 @@ class Backend implements ControllerProviderInterface
                 'records' => $records
             ]
         );
+    }
+
+    public function add(Request $request, Application $app)
+    {
+        /** @var $recordManager \Bolt\Extension\Ohlandt\RequiredRecords\Manager\RecordManager */
+        $recordManager = $app['requiredrecords.recordmanager'];
+
+        $recordManager->createMissingRecords();
+
+        $app['logger.flash']->success("Missing records were successfully created!");
+
+        return new RedirectResponse($app['url_generator']->generate('requiredRecordsOverview'));
     }
 }
