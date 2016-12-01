@@ -3,6 +3,7 @@
 namespace Bolt\Extension\Ohlandt\RequiredRecords\Controller;
 
 use Bolt\Controller\Zone;
+use Bolt\Extension\Ohlandt\RequiredRecords\Filter\GroupedByContentTypesFilter;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
@@ -59,6 +60,29 @@ class Backend implements ControllerProviderInterface
 
     public function overview(Request $request, Application $app)
     {
-        return $app['twig']->render('@RequiredRecords/required-records.twig');
+        /** @var $recordManager \Bolt\Extension\Ohlandt\RequiredRecords\Manager\RecordManager */
+        $recordManager = $app['requiredrecords.recordmanager'];
+        $requiredRecords = $recordManager->getRecords();
+        $missingRecords = $recordManager->getMissingRecords();
+
+        $groupedRecords = GroupedByContentTypesFilter::filter($requiredRecords);
+
+        $records = [];
+
+        foreach ($groupedRecords as $contenttype => $r) {
+            foreach ($r as $record) {
+                $data = [
+                    'data' => $record,
+                    'isMissing' => in_array($record, $missingRecords)
+                ];
+                $records[$contenttype][] = $data;
+            }
+        }
+
+        return $app['twig']->render('@RequiredRecords/required-records.twig',
+            [
+                'records' => $records
+            ]
+        );
     }
 }

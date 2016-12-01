@@ -7,5 +7,43 @@
 {% endblock page_title %}
 
 {% block page_main %}
+    <div class="row">
+        <div class="col-md-8 col-lg-6">
+            {% for contenttype,items in records %}
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th colspan="3">{{ contenttype|capitalize }}</th>
+                    </tr>
+                    <tr>
+                        <th>Key</th>
+                        <th>Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in items %}
+                        <tr {% if item.isMissing %} class="danger" {% endif %}>
+                            <td>
+                                {% for field in item.data.fields %}
+                                    {{ field.key|capitalize }} {% if field.optional %}(optional){% endif %} <br>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for field in item.data.getFields() %}
+                                    {{ field.value }} <br>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endfor %}
 
+            <div>
+                <a class="btn btn-primary" href="{{ app.paths.bolt }}required-records/add">
+                    <i class="fa fa-plus"></i> Add Records
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
