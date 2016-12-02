@@ -28,13 +28,13 @@ class RecordManager
     {
         $missing = [];
 
-        foreach($this->records as $record) {
+        foreach ($this->records as $record) {
             $repo = $this->storage->getRepository($record->getContentType());
             $fields = $record->getRequiredFieldsArray();
 
-            if(count($fields)) {
+            if (count($fields)) {
                 $results = $repo->findBy($fields);
-                if(!$results) {
+                if (!$results) {
                     $missing[] = $record;
                 }
             }
@@ -51,7 +51,7 @@ class RecordManager
             $repo = $this->storage->getRepository($record->getContentType());
             $fields = $record->getFieldsArray();
 
-            if(count($fields)) {
+            if (count($fields)) {
                 $entity = $repo->create($fields);
                 $entity->setStatus('published');
                 $repo->save($entity);
@@ -61,9 +61,9 @@ class RecordManager
 
     protected function parseContentTypes(array $contenttypes)
     {
-        foreach($contenttypes as $contenttype => $values) {
+        foreach ($contenttypes as $contenttype => $values) {
             if (isset($values['required']) && is_array($values['required'])) {
-                foreach($values['required'] as $fields) {
+                foreach ($values['required'] as $fields) {
                     $record = new RequiredRecord($contenttype, $fields);
                     $this->records[] = $record;
                 }

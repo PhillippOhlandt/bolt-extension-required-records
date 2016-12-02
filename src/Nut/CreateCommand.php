@@ -26,8 +26,7 @@ class CreateCommand extends BaseCommand
     {
         $this
             ->setName('required-records:create')
-            ->setDescription('Create all missing records')
-        ;
+            ->setDescription('Create all missing records');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -37,7 +36,7 @@ class CreateCommand extends BaseCommand
 
         $missingRecords = $recordManager->getMissingRecords();
 
-        if(!count($missingRecords)) {
+        if (!count($missingRecords)) {
             return $output->writeln('Nothing to create.');
         }
 

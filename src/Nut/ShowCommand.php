@@ -26,8 +26,7 @@ class ShowCommand extends BaseCommand
     {
         $this
             ->setName('required-records:show')
-            ->setDescription('Show all required records')
-        ;
+            ->setDescription('Show all required records');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -35,7 +34,7 @@ class ShowCommand extends BaseCommand
         /** @var $recordManager \Bolt\Extension\Ohlandt\RequiredRecords\Manager\RecordManager */
         $recordManager = $this->app['requiredrecords.recordmanager'];
 
-        if(!count($recordManager->getRecords())) {
+        if (!count($recordManager->getRecords())) {
             return $output->writeln('There are no required records.');
         }
 

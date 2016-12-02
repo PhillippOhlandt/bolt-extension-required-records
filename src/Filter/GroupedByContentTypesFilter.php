@@ -8,7 +8,7 @@ class GroupedByContentTypesFilter
     {
         $data = [];
 
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $data[$record->getContentType()][] = $record;
         }
 

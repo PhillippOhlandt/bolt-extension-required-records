@@ -15,7 +15,6 @@ class RequiredRecordsServiceProvider implements ServiceProviderInterface
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -31,7 +30,6 @@ class RequiredRecordsServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-
     }
 
     private function registerRecordManager(Application $app)

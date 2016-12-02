@@ -52,7 +52,7 @@ class Backend implements ControllerProviderInterface
     {
         $user = $app['users']->getCurrentUser();
 
-        if($user) {
+        if ($user) {
             return null;
         }
 

@@ -7,7 +7,6 @@ use Bolt\Extension\Ohlandt\RequiredRecords\Field\Field;
 class RequiredRecord
 {
     protected $contenttype;
-
     protected $fields = [];
 
     public function __construct($contenttype, array $fields)
@@ -41,8 +40,8 @@ class RequiredRecord
     {
         $fields = [];
 
-        foreach($this->fields as $field) {
-            if($field->isRequired()) {
+        foreach ($this->fields as $field) {
+            if ($field->isRequired()) {
                 $fields[$field->getKey()] = $field->getValue();
             }
         }
@@ -52,7 +51,7 @@ class RequiredRecord
 
     protected function setFields(array $fields)
     {
-        foreach($fields as $key => $value) {
+        foreach ($fields as $key => $value) {
             $field = new Field($key, $value);
             $this->fields[] = $field;
         }

@@ -34,8 +34,7 @@ class RequiredRecordsExtension extends SimpleExtension
         $menu = new MenuEntry('required-records', 'required-records');
         $menu->setLabel('Required Records')
             ->setIcon('fa:thumb-tack')
-            ->setPermission('dbupdate')
-        ;
+            ->setPermission('dbupdate');
 
         return [
             $menu,
@@ -61,9 +60,5 @@ class RequiredRecordsExtension extends SimpleExtension
     public function boot(\Silex\Application $app)
     {
         parent::boot($app);
-        //dump($app['requiredrecords.recordmanager']);
-        //dump($app['requiredrecords.recordmanager']->getMissingRecords());
-        //dump($app['storage']);
-        //dump($app['routes']);
     }
 }

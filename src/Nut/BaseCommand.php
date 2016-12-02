@@ -23,9 +23,9 @@ class BaseCommand extends Command
 
         $first = true;
 
-        foreach($formattedRecords as $contenttype => $records) {
+        foreach ($formattedRecords as $contenttype => $records) {
 
-            if(!$first) {
+            if (!$first) {
                 $rows[] = new TableSeparator();
             }
 
@@ -37,10 +37,10 @@ class BaseCommand extends Command
 
             $rows[] = ['key', 'value', 'optional'];
 
-            foreach($records as $record) {
+            foreach ($records as $record) {
                 $rows[] = new TableSeparator();
 
-                foreach($record->getFields() as $field) {
+                foreach ($record->getFields() as $field) {
                     $rows[] = [
                         $field->getKey(),
                         $field->getValue(),
@@ -48,7 +48,6 @@ class BaseCommand extends Command
                     ];
                 }
             }
-
         }
 
         $table->setRows($rows);

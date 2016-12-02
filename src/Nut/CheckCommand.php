@@ -26,8 +26,7 @@ class CheckCommand extends BaseCommand
     {
         $this
             ->setName('required-records:check')
-            ->setDescription('List all missing records')
-        ;
+            ->setDescription('List all missing records');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -37,7 +36,7 @@ class CheckCommand extends BaseCommand
 
         $missingRecords = $recordManager->getMissingRecords();
 
-        if(!count($missingRecords)) {
+        if (!count($missingRecords)) {
             return $output->writeln('There are no missing records.');
         }
 
