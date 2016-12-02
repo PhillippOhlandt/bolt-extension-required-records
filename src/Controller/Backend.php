@@ -16,8 +16,6 @@ class Backend implements ControllerProviderInterface
 {
     /**
      * Controller constructor
-     *
-     * @param array $config
      */
     public function __construct()
     {
@@ -48,6 +46,14 @@ class Backend implements ControllerProviderInterface
         return $ctr;
     }
 
+    /**
+     * Simple check if user is logged in
+     *
+     * @param Request $request
+     * @param Application $app
+     *
+     * @return null|RedirectResponse
+     */
     public function before(Request $request, Application $app)
     {
         $user = $app['users']->getCurrentUser();
@@ -61,6 +67,14 @@ class Backend implements ControllerProviderInterface
         return new RedirectResponse($generator->generate('dashboard'), Response::HTTP_SEE_OTHER);
     }
 
+    /**
+     * Render overview page
+     *
+     * @param Request $request
+     * @param Application $app
+     *
+     * @return mixed
+     */
     public function overview(Request $request, Application $app)
     {
         /** @var $recordManager \Bolt\Extension\Ohlandt\RequiredRecords\Manager\RecordManager */
@@ -89,6 +103,14 @@ class Backend implements ControllerProviderInterface
         );
     }
 
+    /**
+     * Create missing records and redirect back to overview page
+     *
+     * @param Request $request
+     * @param Application $app
+     *
+     * @return RedirectResponse
+     */
     public function add(Request $request, Application $app)
     {
         /** @var $recordManager \Bolt\Extension\Ohlandt\RequiredRecords\Manager\RecordManager */

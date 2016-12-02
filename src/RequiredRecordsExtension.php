@@ -6,6 +6,7 @@ use Bolt\Extension\Ohlandt\RequiredRecords\Controller\Backend;
 use Bolt\Extension\SimpleExtension;
 use Bolt\Menu\MenuEntry;
 use Pimple;
+use Silex\Application;
 
 /**
  * Required Records extension class.
@@ -14,6 +15,9 @@ use Pimple;
  */
 class RequiredRecordsExtension extends SimpleExtension
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getServiceProviders()
     {
         return [
@@ -22,6 +26,9 @@ class RequiredRecordsExtension extends SimpleExtension
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerTwigPaths()
     {
         return [
@@ -29,6 +36,9 @@ class RequiredRecordsExtension extends SimpleExtension
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerMenuEntries()
     {
         $menu = new MenuEntry('required-records', 'required-records');
@@ -41,6 +51,9 @@ class RequiredRecordsExtension extends SimpleExtension
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerBackendControllers()
     {
         return [
@@ -48,6 +61,9 @@ class RequiredRecordsExtension extends SimpleExtension
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerNutCommands(Pimple $container)
     {
         return [
@@ -57,7 +73,10 @@ class RequiredRecordsExtension extends SimpleExtension
         ];
     }
 
-    public function boot(\Silex\Application $app)
+    /**
+     * {@inheritdoc}
+     */
+    public function boot(Application $app)
     {
         parent::boot($app);
     }

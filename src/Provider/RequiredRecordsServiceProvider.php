@@ -10,8 +10,6 @@ class RequiredRecordsServiceProvider implements ServiceProviderInterface
 {
     /**
      * Service Provider Constructor
-     *
-     * @param array $config
      */
     public function __construct()
     {
@@ -32,6 +30,11 @@ class RequiredRecordsServiceProvider implements ServiceProviderInterface
     {
     }
 
+    /**
+     * Register RecordManager in application container
+     *
+     * @param Application $app
+     */
     private function registerRecordManager(Application $app)
     {
         $app['requiredrecords.recordmanager'] = $app->share(

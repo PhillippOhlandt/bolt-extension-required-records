@@ -7,23 +7,42 @@ use Bolt\Storage\EntityManagerInterface;
 
 class RecordManager
 {
+    /**
+     * @var RequiredRecord[]
+     */
     protected $records = [];
     /**
      * @var EntityManagerInterface
      */
     private $storage;
 
+    /**
+     * RecordManager constructor
+     *
+     * @param array $contenttypes
+     * @param EntityManagerInterface $storage
+     */
     public function __construct(array $contenttypes, EntityManagerInterface $storage)
     {
         $this->parseContentTypes($contenttypes);
         $this->storage = $storage;
     }
 
+    /**
+     * Gets all required records
+     *
+     * @return RequiredRecord[]
+     */
     public function getRecords()
     {
         return $this->records;
     }
 
+    /**
+     * Gets all missing required records
+     *
+     * @return RequiredRecord[]
+     */
     public function getMissingRecords()
     {
         $missing = [];
@@ -43,6 +62,9 @@ class RecordManager
         return $missing;
     }
 
+    /**
+     * Creates all missing required records
+     */
     public function createMissingRecords()
     {
         $records = $this->getMissingRecords();
@@ -59,6 +81,11 @@ class RecordManager
         }
     }
 
+    /**
+     * Parses the ContentTypes array and checks for required records
+     *
+     * @param array $contenttypes
+     */
     protected function parseContentTypes(array $contenttypes)
     {
         foreach ($contenttypes as $contenttype => $values) {

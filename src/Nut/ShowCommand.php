@@ -8,13 +8,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ShowCommand extends BaseCommand
 {
+    /**
+     * @var Pimple
+     */
     private $app;
 
     /**
      * Command constructor
      *
      * @param Pimple $app
-     * @param array $config
      */
     public function __construct(Pimple $app)
     {
@@ -22,6 +24,9 @@ class ShowCommand extends BaseCommand
         $this->app = $app;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -29,6 +34,9 @@ class ShowCommand extends BaseCommand
             ->setDescription('Show all required records');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var $recordManager \Bolt\Extension\Ohlandt\RequiredRecords\Manager\RecordManager */

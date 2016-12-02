@@ -9,11 +9,20 @@ use Symfony\Component\Console\Helper\TableSeparator;
 
 class BaseCommand extends Command
 {
+    /**
+     * BaseCommand constructor
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Renders the given list of records as ASCII table
+     *
+     * @param array $records
+     * @param $output
+     */
     protected function renderRecordsTable(array $records, $output)
     {
         $formattedRecords = GroupedByContentTypesFilter::filter($records);
